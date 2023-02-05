@@ -1,10 +1,4 @@
 import ytdl from "ytdl-core";
-
-const COMMON = "https://www.youtube.com/watch?v=";
-function getYtID(url = "") {
-  url = url.trim();
-  return url?.split(COMMON)?.[1];
-}
 function validURL(str) {
   var pattern = new RegExp(
     "^(https?:\\/\\/)?" + // protocol
@@ -24,7 +18,7 @@ export default async function handler(req, res) {
     if (!validURL(yt_url)) {
       throw new Error("Invalid url.");
     }
-    const yt_id = getYtID(yt_url);
+    const yt_id = ytdl.getVideoID(yt_url);
     if(!ytdl.validateID(yt_id)){
       throw new Error("Invalid ID")
     }
