@@ -42,6 +42,7 @@ export default function Home() {
 
   useEffect(() => {
     const url = ref.current.value;
+    if(!url) return;
     mutate(url, {
       onSuccess: (data) => {
         setData(data);
@@ -148,7 +149,10 @@ export default function Home() {
                     <h4 className="text-2xl font-mono font-semibold tracking-wider text-slate-900">
                       {ele?.quality || "--- ---"}
                     </h4>
-                    <span className="inline-block py-1 px-2 rounded-md leading-5 shadow-md shadow-indigo-600/30 bg-white text-slate-800 font-mono font-semibold tracking-wider">
+                    <span className="inline-block py-1 px-2 rounded-md leading-5 shadow-md shadow-indigo-600/30 bg-slate-600 text-sm text-white font-mono font-semibold tracking-wider mr-2">
+                      {ele?.size || "0"} MB
+                    </span>
+                    <span className="inline-block py-1 px-2 rounded-md leading-5 shadow-md shadow-indigo-600/30 bg-white/40  text-sm text-slate-800 font-mono font-semibold tracking-wider">
                       {ele?.type || "Video"}
                     </span>
                   </div>

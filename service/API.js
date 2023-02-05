@@ -1,12 +1,19 @@
+import axios from "axios";
 const DOMAIN =
   process.env.NODE_ENV === "production"
     ? "https://yt15.vercel.app/"
     : "http://localhost:3000/";
 
+const apiClient = axios.create({
+  baseURL: `${DOMAIN}api`,
+});
+
 class APIClass {
-  root = `${DOMAIN}api`;
-  async search(q) {
-    return await (await fetch(this.root + "/search?yt=" + q)).json();
+  async search(q = "") {
+    const { data } = await apiClient.get("/search", {
+      params: { yt: (q + "").trim() },
+    });
+    return data;
   }
 }
 

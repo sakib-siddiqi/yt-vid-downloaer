@@ -19,10 +19,12 @@ export default async function handler(req, res) {
       throw new Error("Invalid url.");
     }
     const yt_id = ytdl.getVideoID(yt_url);
-    if(!ytdl.validateID(yt_id)){
-      throw new Error("Invalid ID")
+    if (!ytdl.validateID(yt_id)) {
+      throw new Error("Invalid ID");
     }
-    const info = await ytdl.getInfo(yt_id,{ filter: format => format.container === 'mp4' });
+    const info = await ytdl.getInfo(yt_id, {
+      filter: (format) => format.container === "mp4",
+    });
     const formets = info?.formats
       ?.filter((ele) => !!ele.hasVideo)
       ?.map((item) => ({
@@ -30,7 +32,7 @@ export default async function handler(req, res) {
         hasAudio: item?.hasAudio,
         quality: item?.qualityLabel,
         type: item?.container,
-        size : item?.bitrate,
+        size: (+item?.contentLength / 1024 / 1024).toFixed(2),
       }))
       ?.sort((a, b) => b.hasAudio - a.hasAudio);
     const vid_info = {
@@ -45,8 +47,11 @@ export default async function handler(req, res) {
         ]?.url,
       formets,
     };
-    return res.status(200).json(vid_info);
+    return res
+      .status(200)
+      .json(vid_info);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       error: error?.message || "server error",
     });
