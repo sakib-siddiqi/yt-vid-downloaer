@@ -32,7 +32,7 @@ export default async function handler(req, res) {
         hasAudio: item?.hasAudio,
         quality: item?.qualityLabel,
         type: item?.container,
-        size: (+item?.contentLength / 1024 / 1024).toFixed(2),
+        size: ((+item?.contentLength || 0) / (1024 * 1024) || 0).toFixed(1),
       }))
       ?.sort((a, b) => b.hasAudio - a.hasAudio);
     const vid_info = {
@@ -47,9 +47,7 @@ export default async function handler(req, res) {
         ]?.url,
       formets,
     };
-    return res
-      .status(200)
-      .json(vid_info);
+    return res.status(200).json(vid_info);
   } catch (error) {
     console.log(error);
     return res.status(500).json({

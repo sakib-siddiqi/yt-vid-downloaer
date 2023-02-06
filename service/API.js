@@ -15,6 +15,10 @@ class APIClass {
     });
     return data;
   }
+
+  async share(file){
+    
+  }
 }
 
 const API = new APIClass();
