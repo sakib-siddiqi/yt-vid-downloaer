@@ -15,7 +15,7 @@ const route = nextConnect({
 route.post(async (req, res) => {
   try {
     const form = new formidable.IncomingForm({
-      maxFileSize: 3009715200,
+      maxFileSize: 400 * 1024 * 1024, // 400 MB,
     });
     form.parse(req, (err, fields, files) => {
       if (err) {
