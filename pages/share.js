@@ -13,7 +13,7 @@ export default function share(params) {
       form.append("file", file);
       // const base64 = await getBase64(file);
       const { data } = await axios.post(
-        "http://localhost:3000/api/upload",
+        "https://yt15.vercel.app/api/upload",
         form_ref.current,
         {
           headers: {
